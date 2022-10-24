@@ -21,11 +21,9 @@ const UpcomingMoviesPage = () => {
     <PageTemplate
       title='Upcoming Movies'
       movies={movies}
-      action={() => {
+      action={(movie) => {
         return (
-          <>
-            <PlaylistAddIcon movie={movies} />
-          </>
+          <PlaylistAddIcon movie={movie} />
         );
       }}
     />
