@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from "react";
-import PageTemplate from '../components/templateMovieListPage';
+import React from "react";
+import { useQuery } from 'react-query';
 import { getUpcoming } from "../api/tmdb-api";
+import PageTemplate from '../components/templateMovieListPage';
+import Spinner from '../components/spinner';
 import PlaylistAddIcon from "../components/cardIcons/addToPlaylist";
 
 const UpcomingMoviesPage = () => {
-  const [movies, setMovies] = useState([]);
+  const { data, error, isLoading, isError } = useQuery('upcoming', getUpcoming);
 
-  useEffect(() => {
-    getUpcoming().then(movies => {
-      setMovies(movies);
-    });
-  }, []);
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+  const movies = data.results;
 
   return (
     <PageTemplate
